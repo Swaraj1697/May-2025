@@ -5,7 +5,7 @@ export const RegisterUser = async (userData) => {
         const response = await axiosInstance.post("/api/users/register", userData);
         return response.data;
     } catch (error) {
-        return error.response.data;
+        return error;
     }
 }
 
@@ -14,7 +14,7 @@ export const LoginUser = async (userData) => {
         const response = await axiosInstance.post("/api/users/login", userData);
         return response.data;
     } catch (error) {
-        return error.response.data;
+        return error;
     }
 }
 
@@ -24,7 +24,7 @@ export const GetCurrentUser = async () => {
         const response = await axiosInstance.get("/api/users/currentUser");
         return response.data;
     } catch (error) {
-        return error.response.data;
+        return error;
     }
 }
 
@@ -33,7 +33,7 @@ export const ForgetPassword = async (userData) => {
         const response = await axiosInstance.patch("/api/users/forgetpassword", userData);
         return response.data;
     } catch (error) {
-        return error.response.data;
+        return error;
     }
 }
 
@@ -42,7 +42,7 @@ export const ResetPassword = async (userData, id) => {
         const response = await axiosInstance.patch(`/api/users/resetpassword/${id}`, userData);
         return response.data;
     } catch (error) {
-        return error.response.data;
+        return error;
     }
 }
 
