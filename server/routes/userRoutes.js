@@ -57,7 +57,7 @@ usersRouter.post('/login', async (req, res) => {
             });
         }
 
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' }); // Generate a token with user ID and secret key
+        const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1d' }); // Generate a token with user ID and secret key
         // res.cookie('token', token, {
         //     httpOnly: true, // Cannot be accessed by JavaScript on the client side
         //     maxAge: 24 * 60 * 60 * 1000, // Set the cookie to expire in 1 day

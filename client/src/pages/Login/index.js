@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Form, Input, message } from 'antd'
 import { Link, useNavigate } from 'react-router-dom'
 import { LoginUser } from '../../api/users'
+import { jwtDecode } from 'jwt-decode';
 
 function Login() {
     const navigate = useNavigate();
@@ -14,6 +15,11 @@ function Login() {
                 console.log(response.message);
                 localStorage.setItem("token", response.data); // Store the token in local storage
                 console.log("Signing JWT with secret:", process.env.JWT_SECRET);
+
+                const token = response.data;
+                const decoded = jwtDecode(token);
+                const role = decoded.role;
+
                 if (role === "admin") {
                     navigate("/admin");
                 } else if (role === "partner") {
