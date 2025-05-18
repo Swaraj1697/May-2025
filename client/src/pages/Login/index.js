@@ -14,7 +14,14 @@ function Login() {
                 console.log(response.message);
                 localStorage.setItem("token", response.data); // Store the token in local storage
                 console.log("Signing JWT with secret:", process.env.JWT_SECRET);
-                navigate("/"); // Redirect to home page after successful login
+                if (role === "admin") {
+                    navigate("/admin");
+                } else if (role === "partner") {
+                    navigate("/partner");
+                }
+                else {
+                    navigate("/");
+                }// Redirect to home page after successful login
 
             } else {
                 message.error(response.message);

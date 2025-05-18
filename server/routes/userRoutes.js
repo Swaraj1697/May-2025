@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser'); // Importing the cookie-parser mi
 const usersRouter = express.Router(); // Create a new router object
 const authMiddleware = require('../middlewares/authMiddleware'); // Importing the authentication middleware
 const EmailHelper = require("../utils/emailHelper"); // Importing the email helper for sending emails
+const bcrypt = require('bcrypt'); // Importing the bcrypt library for password hashing
 
 usersRouter.post('/register', async (req, res) => {
     try {
@@ -16,7 +17,13 @@ usersRouter.post('/register', async (req, res) => {
             });
         }
 
-        const newUser = new UserModel(req.body); // Create a new user instance with the request body
+        const saltRounds = 10; // Number of rounds for hashing
+        const hashedPassword = await bcrypt.hash(req.body.password, saltRounds); // Hash the password using bcrypt
+        const newUser = ({
+            ...req.body,
+            password: hashedPassword // Store the hashed password instead of the plain text password
+        })
+        // const newUser = new UserModel(req.body); // Create a new user instance with the request body
 
         await newUser.save(); // Save the new user to the database
         res.send({
